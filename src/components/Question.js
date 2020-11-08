@@ -1,11 +1,12 @@
 import React from 'react'
 
-export default function Question({front, back, handleChange}) {
+export default function Question({front, id, handleChange}) {
   return (
-    <div>
-      <label>{front}</label>
-      <br />
-      <input type='text' onChange={handleChange} name={front}/>
+    <div className='field'>
+      <label className='label'>{front}</label>
+      <div class="control">
+      <input type='text' onChange={handleChange} name={id} className='input'/>
+      </div>
     </div>
   )
 }
