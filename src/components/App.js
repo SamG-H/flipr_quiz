@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import StackContainer from './StackContainer'
+import Router from './Router'
 
 export default class App extends Component {
   render() {
     return (
       <div>
-        < StackContainer />
+        < Router />
       </div>
     )
   }
