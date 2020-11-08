@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function About() {
   return (
-    <div>
+    <div className='has-text-centered'>
       <h1 className='is-size-1'>
         About
       </h1>
