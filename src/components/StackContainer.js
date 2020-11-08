@@ -24,7 +24,7 @@ class StackContainer extends Component {
   render() {
     return (
       <div  className='has-text-centered'>
-        {this.state.stack_id === '' ? < StackList handleClick={this.handleClick}/> : < Quiz id={this.state.stack_id}/>}
+        {this.state.stack_id === '' ? < StackList handleClick={this.handleClick}/> : < Quiz id={this.state.stack_id} />}
       </div>
     )
   }
