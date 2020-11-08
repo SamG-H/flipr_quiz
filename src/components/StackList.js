@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 const StacksList = ({ stacks, handleClick }) => {
   if(stacks.data){
-    console.log(stacks)
     return (
         <div>
             <h1 className='is-size-1'>Stacks List:</h1>
