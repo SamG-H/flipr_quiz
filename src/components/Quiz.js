@@ -17,7 +17,6 @@ class Quiz extends Component {
 
   handleChange = e => {
     const {name, value} = e.target
-    //const answers = this.state.answers
     let answers = {...this.state.answers}
     answers[name] = {
       content: value,
@@ -30,25 +29,36 @@ class Quiz extends Component {
     e.preventDefault()
     this.setState({submitted: true})
     const score = this.correctQuiz()
-    console.log(this.correctQuiz())
+    //console.log(this.correctQuiz())
     this.setState({score: score})
   }
 
   correctQuiz = () => {
-    console.log('state', this.state)
     let score = 0
-    for (const property in this.state.answers) {
-      console.log('property:', property)
+    for (const id in this.state.answers) {
       this.props.stacks.included.forEach( card => {
-        if (card.id === property){
-          //if(this.state.answers[property].toLowerCase() === card.attributes.back.toLowerCase()){ 
-          //  score += 1
-            
-          //}
+        if (card.id === id){
+          console.log('this.state.answers[id].content: ', this.state.answers[id].content)
+          console.log('id: ', id)
+          if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
+            score += 1
+            let answers = {...this.state.answers}
+            answers[id] = {
+              isCorrect: true
+            }
+            console.log('answer b4 setState: ', answers[id].content)
+            this.setState({answers},  function () {
+              console.log('answer after setState: ', this.state.answers[id].content)
+            })
+          }
         }
       })
     }
     return score;
+  }
+
+  configureColor = () => {
+    return null
   }
 
   render() {
@@ -58,10 +68,17 @@ class Quiz extends Component {
         {this.state.submitted ? < Score score={this.state.score} possible={document.querySelectorAll('input').length - 1}/> : null }
         <form onSubmit={this.handleSubmit}>
         {this.props.stacks.included.map( card => {
+          //debugger
           if (card.relationships.stack.data.id === this.props.id){
+            /*let answers = {...this.state.answers}
+            answers[card.id] = {
+              content: '',
+              isCorrect: false
+            }
+            this.setState({answers})*/
             return (
             <div key={card.id}>
-              < Question front={card.attributes.front} id={card.id} result={'is-danger'} handleChange={this.handleChange}/>
+              < Question front={card.attributes.front} id={card.id} configureColor={this.configureColor} handleChange={this.handleChange}/>
             </div>
           )
             }
