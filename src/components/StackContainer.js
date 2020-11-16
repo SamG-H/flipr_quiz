@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Stacks from './Stacks'
-import Quiz from './Quiz'
-
-import {fetchStacks} from '../actions/stacksActions'
 
 class StackContainer extends Component {
   render() {

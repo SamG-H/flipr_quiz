@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Question from './Question'
-import Score from './Score'
 import { fetchCards } from '../actions/cardsActions'
 import Quiz from './Quiz'
 
