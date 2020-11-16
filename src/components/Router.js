@@ -13,7 +13,7 @@ export default function Router() {
         <Route exact path='/' component={Home} />
         <Route exact path='/about' component={About} />
         <Route exact path='/stacks' component={StackContainer} />
-        <Route exact path="stacks/:id" render={props => <Quiz {...props} />} />
+        <Route exact path="/stacks/:id" component={props => <Quiz {...props} />} />
       </Switch>
   )
 }
