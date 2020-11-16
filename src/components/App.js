@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import Router from './Router'
 import NavBar from './NavBar'
+import { connect } from 'react-redux'
+import { fetchStacks } from '../actions/stacksActions'
 
-export default class App extends Component {
+class App extends Component {
+  
+  componentDidMount() {
+    this.props.fetchStacks()
+  }
+  
   render() {
     return (
       <div>
@@ -12,3 +19,11 @@ export default class App extends Component {
     )
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchStacks: () => dispatch(fetchStacks())
+  }
+}
+
+export default connect(null, mapDispatchToProps) (App)
