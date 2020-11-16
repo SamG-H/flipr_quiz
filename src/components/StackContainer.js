@@ -7,9 +7,12 @@ import {fetchStacks} from '../actions/stacksActions'
 
 class StackContainer extends Component {
   render() {
+    if(this.props.stacks.length === 0) {
+      return null
+    }
     return (
       <div  className='has-text-centered'>
-        < Stacks stacks={this.props.stacks} />
+        <Stacks stacks={this.props.stacks} />
       </div>
     )
   }
