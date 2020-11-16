@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
 import Score from './Score'
+import { fetchCards } from '../actions/cardsActions'
 
-class Quiz extends Component {
-
-  componentDidMount() {
-    console.log('yessss')
-  }
+export default class Quiz extends Component {
 
   state = {
     submitted: false,
@@ -36,21 +33,17 @@ class Quiz extends Component {
   correctQuiz = () => {
     let score = 0
     for (const id in this.state.answers) {
-      this.props.stacks.included.forEach( card => {
-        if (card.id === id){
-          console.log('this.state.answers[id].content: ', this.state.answers[id].content)
-          console.log('id: ', id)
-          if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
-            score += 1
-            let answers = {...this.state.answers}
-            answers[id] = {
-              isCorrect: true
-            }
-            console.log('answer b4 setState: ', answers[id].content)
-            this.setState({answers},  function () {
-              console.log('answer after setState: ', this.state.answers[id].content)
-            })
+      this.props.cards.data.forEach( card => {
+        if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
+          score += 1
+          let answers = {...this.state.answers}
+          answers[id] = {
+            isCorrect: true
           }
+          console.log('answer b4 setState: ', answers[id].content)
+          this.setState({
+            answers
+          })
         }
       })
     }
@@ -62,26 +55,17 @@ class Quiz extends Component {
   }
 
   render() {
-    debugger
+    //  debugger
       return (
-      <div  className='has-text-centered'>
-        <h2 className='is-size-2'>{this.props.title}</h2>
+      <div>
         {this.state.submitted && < Score score={this.state.score} possible={document.querySelectorAll('input').length - 1}/> }
         <form onSubmit={this.handleSubmit}>
-        {this.props.stacks.included.map( card => {
-          if (card.relationships.stack.data.id === this.props.match.params.id){
-            /*let answers = {...this.state.answers}
-            answers[card.id] = {
-              content: '',
-              isCorrect: false
-            }
-            this.setState({answers})*/
+        {this.props.cards.data.map( card => {
             return (
             <div key={card.id}>
-              < Question front={card.attributes.front} id={card.id} configureColor={this.configureColor} handleChange={this.handleChange}/>
+              <Question front={card.attributes.front} id={card.id} configureColor={this.configureColor} handleChange={this.handleChange}/>
             </div>
           )
-            }
         })}
         <br />
         <input type='submit' value='Submit Quiz' className='button is-primary' />
@@ -90,9 +74,3 @@ class Quiz extends Component {
       )
   }
 }
-
-const mapStateToProps = state => {
-  return { stacks: state.stacks }
-}
-
-export default connect(mapStateToProps)(Quiz);
