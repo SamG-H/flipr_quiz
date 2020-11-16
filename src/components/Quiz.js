@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import Question from './Question'
 import Score from './Score'
-import { fetchCards } from '../actions/cardsActions'
 
 export default class Quiz extends Component {
 
@@ -26,7 +24,6 @@ export default class Quiz extends Component {
     e.preventDefault()
     this.setState({submitted: true})
     const score = this.correctQuiz()
-    //console.log(this.correctQuiz())
     this.setState({score: score})
   }
 
@@ -34,10 +31,12 @@ export default class Quiz extends Component {
     let score = 0
     for (const id in this.state.answers) {
       this.props.cards.data.forEach( card => {
+        console.log('id: ', id)
         if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
           score += 1
           let answers = {...this.state.answers}
           answers[id] = {
+            content: this.state.answers[id].content,
             isCorrect: true
           }
           console.log('answer b4 setState: ', answers[id].content)
