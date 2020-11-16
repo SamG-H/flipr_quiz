@@ -6,7 +6,7 @@ import Score from './Score'
 class Quiz extends Component {
 
   componentDidMount() {
-    //this.props.resetStackId()
+    console.log('yessss')
   }
 
   state = {
@@ -62,14 +62,14 @@ class Quiz extends Component {
   }
 
   render() {
+    debugger
       return (
       <div  className='has-text-centered'>
         <h2 className='is-size-2'>{this.props.title}</h2>
-        {this.state.submitted ? < Score score={this.state.score} possible={document.querySelectorAll('input').length - 1}/> : null }
+        {this.state.submitted && < Score score={this.state.score} possible={document.querySelectorAll('input').length - 1}/> }
         <form onSubmit={this.handleSubmit}>
         {this.props.stacks.included.map( card => {
-          //debugger
-          if (card.relationships.stack.data.id === this.props.id){
+          if (card.relationships.stack.data.id === this.props.match.params.id){
             /*let answers = {...this.state.answers}
             answers[card.id] = {
               content: '',
