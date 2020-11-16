@@ -9,7 +9,7 @@ class StackContainer extends Component {
   render() {
     return (
       <div  className='has-text-centered'>
-        < Stacks />
+        < Stacks stacks={this.props.stacks} />
       </div>
     )
   }
