@@ -6,6 +6,7 @@ import Home from './Home'
 import StackContainer from './StackContainer'
 import About from './About'
 import Quiz from './Quiz'
+import QuizContainer from './QuizContainer'
 
 export default function Router() {
   return (
@@ -13,7 +14,7 @@ export default function Router() {
         <Route exact path='/' component={Home} />
         <Route exact path='/about' component={About} />
         <Route exact path='/stacks' component={StackContainer} />
-        <Route exact path="/stacks/:id" component={props => <Quiz {...props} />} />
+        <Route exact path="/stacks/:id" component={props => <QuizContainer {...props} />} />
       </Switch>
   )
 }
