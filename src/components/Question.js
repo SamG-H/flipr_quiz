@@ -11,9 +11,10 @@ export default function Question({front, back, id, handleChange, isCorrect, isSu
       <div className='field'>
         <label className='label is-size-5'>{front}</label>
         <div className="control">
-        <input type='text' onChange={handleChange} name={id} className={'input' + className}  style={{ width: '30%' }}/>
+          <input type='text' onChange={handleChange} name={id} className={'input' + className}  style={{ width: '30%' }} required/>
         </div>
-        {isSubmitted && !isCorrect ? <p class="help is-danger">{back}</p> : null}
+        
+        {isSubmitted && !isCorrect ? <p className="help is-danger">{back}</p> : null}
       </div>
     )
 }
