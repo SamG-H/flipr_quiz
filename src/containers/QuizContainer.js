@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Quizzes from './Quizzes'
+import Quizzes from '../components/Quizzes'
 
 class QuizContainer extends Component {
 
