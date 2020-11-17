@@ -3,8 +3,7 @@ import Quiz from './Quiz'
 
 export default function Quizzes({ stacks, handleClick }) {
     return (
-        <div className='has-text-centered'>
-            <h1 className='is-size-1'>Quizzes List:</h1>
+        <div>
             {stacks.data.map(stack => {
               return (
                 <Quiz key={stack.id} 
