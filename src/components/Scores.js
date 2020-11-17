@@ -1,12 +1,17 @@
 import React from 'react';
-import Score from './Score'
 
-export default function Scores({ scores, handleClick }) {
+
+export default function Scores({ scores }) {
     return (
         <div>
             {scores.data.map(score => {
+              const stack = scores.included.find(stack => {
+                return stack.id === score.relationships.stack.data.id
+              })
               return (
-                <p>{score.attributes.name} scored a {score.attributes.percentage}</p>
+                <div key={score.id}>
+                  <p className='is-size-3'>{score.attributes.name} scored a {score.attributes.percentage} on {stack.attributes.title}</p>
+                </div>
               )}
             )}
         </div>
