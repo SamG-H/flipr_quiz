@@ -5,15 +5,18 @@ import Question from './Question'
 import Score from './Score'
 
 class QuizForm extends Component {
+  
+  constructor() {
+    super()
+    this.state = {
+      submitted: false,
+      score: 0,
+      answers: {}
+    }
+  }
 
   componentDidMount() {
     this.props.fetchCards(this.props.match.params.id)
-  }
-
-  state = {
-    submitted: false,
-    score: 0,
-    answers: {}
   }
 
   handleChange = e => {
@@ -31,38 +34,39 @@ class QuizForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    this.setState({submitted: true})
     const score = this.correctQuiz()
-    this.setState({score: score})
+    this.setState({
+      score: score,
+      submitted: true
+    })
   }
 
   correctQuiz = () => {
     let score = 0
+    let answers = {...this.state.answers}
     for (const id in this.state.answers) {
       this.props.cards.data.forEach( card => {
         if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
           score += 1
-          let answers = {...this.state.answers}
-          console.log('copy: ', answers)
-          console.log('state: ', this.state.answers)
-          // debugger
           answers[id] = {
-            content: this.state.answers[id].content,
+            ...this.state.answers[id],
             isCorrect: true
           }
-          console.log('copy_after_change: ', answers)
-          this.setState({
-            answers
-          }, console.log('state_after_setState: ', this.state.answers))
-          debugger
         }
+      })
+      this.setState({
+        answers
       })
     }
     return score;
   }
 
-  configureColor = () => {
-    
+  handleClick = () => {
+    this.setState({
+      score: 0,
+      submitted: false,
+      answers: []
+    })
   }
 
   render() {
@@ -73,12 +77,18 @@ class QuizForm extends Component {
       return (
       <div className='has-text-centered'>
         <h1 className='is-size-2'>{this.props.cards.included[0].attributes.title} Quiz</h1>
-        {this.state.submitted && <Score score={this.state.score} possible={this.props.cards.data.length}/> }
+        {this.state.submitted && <Score score={this.state.score} possible={this.props.cards.data.length} handleClick={this.handleClick} /> }
         <form onSubmit={this.handleSubmit}>
         {this.props.cards.data.map( card => {
             return (
             <div key={card.id}>
-              <Question front={card.attributes.front} back={card.attributes.back} id={card.id} isSubmitted={this.state.submitted} isCorrect={this.state.submitted && this.state.answers[card.id].isCorrect} handleChange={this.handleChange}/>
+              <Question
+              front={card.attributes.front} 
+              back={card.attributes.back} 
+              id={card.id} 
+              isSubmitted={this.state.submitted} 
+              isCorrect={this.state.submitted && this.state.answers[card.id].isCorrect} 
+              handleChange={this.handleChange}/>
             </div>
           )
         })}
