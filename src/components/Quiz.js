@@ -17,7 +17,9 @@ export default class Quiz extends Component {
       content: value,
       isCorrect: false
     }
-    this.setState({answers})
+    this.setState({
+      submitted: false,
+      answers})
   }
 
   handleSubmit = e => {
@@ -31,7 +33,6 @@ export default class Quiz extends Component {
     let score = 0
     for (const id in this.state.answers) {
       this.props.cards.data.forEach( card => {
-        console.log('id: ', id)
         if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
           score += 1
           let answers = {...this.state.answers}
@@ -39,7 +40,6 @@ export default class Quiz extends Component {
             content: this.state.answers[id].content,
             isCorrect: true
           }
-          console.log('answer b4 setState: ', answers[id].content)
           this.setState({
             answers
           })
@@ -50,19 +50,18 @@ export default class Quiz extends Component {
   }
 
   configureColor = () => {
-    return null
+    
   }
 
   render() {
-    //  debugger
       return (
       <div>
-        {this.state.submitted && < Score score={this.state.score} possible={document.querySelectorAll('input').length - 1}/> }
+        {this.state.submitted && <Score score={this.state.score} possible={document.querySelectorAll('input').length - 1}/> }
         <form onSubmit={this.handleSubmit}>
         {this.props.cards.data.map( card => {
             return (
             <div key={card.id}>
-              <Question front={card.attributes.front} id={card.id} configureColor={this.configureColor} handleChange={this.handleChange}/>
+              <Question front={card.attributes.front} back={card.attributes.back} id={card.id} isSubmitted={this.state.submitted} isCorrect={this.state.submitted > 0 && this.state.answers[card.id].isCorrect} handleChange={this.handleChange}/>
             </div>
           )
         })}
