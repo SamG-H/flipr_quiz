@@ -27,8 +27,6 @@ class QuizForm extends Component {
       isCorrect: false
     }
     this.setState({
-      score: 0,
-      submitted: false,
       answers})
   }
 
@@ -73,7 +71,6 @@ class QuizForm extends Component {
     if(this.props.cards.length === 0) {
       return null
     }
-
       return (
       <div className='has-text-centered'>
         <h1 className='is-size-2'>{this.props.cards.included[0].attributes.title} Quiz</h1>
@@ -87,7 +84,8 @@ class QuizForm extends Component {
               back={card.attributes.back} 
               id={card.id} 
               isSubmitted={this.state.submitted} 
-              isCorrect={this.state.submitted && this.state.answers[card.id].isCorrect} 
+              isCorrect={this.state.submitted && this.state.answers[card.id].isCorrect}
+              value={(Object.keys(this.state.answers).length === 0) || !(card.id in this.state.answers) ?  '' : this.state.answers[card.id].content }
               handleChange={this.handleChange}/>
             </div>
           )
