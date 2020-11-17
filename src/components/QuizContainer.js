@@ -1,36 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCards } from '../actions/cardsActions'
-import Quiz from './Quiz'
+import Quizzes from './Quizzes'
 
 class QuizContainer extends Component {
-  componentDidMount() {
-    this.props.fetchCards(this.props.match.params.id)
-  }
 
   render() {
-    if(this.props.cards.length === 0) {
+    if(this.props.stacks.length === 0) {
       return null
     }
+    
     return (
       <div className='has-text-centered'>
-        <h1 className='is-size-2'>{this.props.cards.included[0].attributes.title} Quiz</h1>
-        <Quiz cards={this.props.cards} />
+        <Quizzes stacks={this.props.stacks} />
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
+const mapPropsToState = state => {
   return {
-    cards: state.cards
+    stacks: state.stacks
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchCards: (id) => dispatch(fetchCards(id))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (QuizContainer)
+export default connect(mapPropsToState) (QuizContainer)

@@ -7,7 +7,7 @@ export default class NavBar extends Component {
       <nav className='navbar'>
         <NavLink to="/" exact className='navbar-item'>Home</NavLink>
         <NavLink to="/about" exact className='navbar-item'>About</NavLink>
-        <NavLink to="/stacks" exact className='navbar-item'>Stacks</NavLink>
+        <NavLink to="/quizzes" exact className='navbar-item'>Quizzes</NavLink>
       </nav>
     )
   }

@@ -1,13 +1,13 @@
 import React from 'react';
-import Stack from './Stack'
+import Quiz from './Quiz'
 
-export default function Stacks({ stacks, handleClick }) {
+export default function Quizzes({ stacks, handleClick }) {
     return (
         <div className='has-text-centered'>
-            <h1 className='is-size-1'>Stacks List:</h1>
+            <h1 className='is-size-1'>Quizzes List:</h1>
             {stacks.data.map(stack => {
               return (
-                <Stack key={stack.id} 
+                <Quiz key={stack.id} 
                 id={stack.id}
                 onClick={handleClick} 
                 className='is-size-3 button is-link is-light' 
