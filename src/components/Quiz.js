@@ -36,10 +36,14 @@ export default class Quiz extends Component {
         if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
           score += 1
           let answers = {...this.state.answers}
+          console.log('copy: ', answers)
+          console.log('state: ', this.state.answers)
+          // debugger
           answers[id] = {
             content: this.state.answers[id].content,
             isCorrect: true
           }
+          console.log('after_change: ', answers)
           this.setState({
             answers
           })
@@ -56,12 +60,12 @@ export default class Quiz extends Component {
   render() {
       return (
       <div>
-        {this.state.submitted && <Score score={this.state.score} possible={document.querySelectorAll('input').length - 1}/> }
+        {this.state.submitted && <Score score={this.state.score} possible={this.props.cards.data.length}/> }
         <form onSubmit={this.handleSubmit}>
         {this.props.cards.data.map( card => {
             return (
             <div key={card.id}>
-              <Question front={card.attributes.front} back={card.attributes.back} id={card.id} isSubmitted={this.state.submitted} isCorrect={this.state.submitted > 0 && this.state.answers[card.id].isCorrect} handleChange={this.handleChange}/>
+              <Question front={card.attributes.front} back={card.attributes.back} id={card.id} isSubmitted={this.state.submitted} isCorrect={this.state.submitted && this.state.answers[card.id].isCorrect} handleChange={this.handleChange}/>
             </div>
           )
         })}
