@@ -42,20 +42,22 @@ class QuizForm extends Component {
   correctQuiz = () => {
     let score = 0
     let answers = {...this.state.answers}
-    for (const id in this.state.answers) {
-      this.props.cards.data.forEach( card => {
-        if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()){ 
+    this.props.cards.data.forEach( card => {
+      for (const id in this.state.answers) {
+        if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()
+           && id === card.id){ 
           score += 1
           answers[id] = {
             ...this.state.answers[id],
             isCorrect: true
           }
         }
-      })
-      this.setState({
-        answers
-      })
-    }
+      }
+    })
+
+    this.setState({
+      answers
+    })
     return score;
   }
 
@@ -73,7 +75,7 @@ class QuizForm extends Component {
     }
       return (
       <div className='has-text-centered'>
-        <h1 className='is-size-2'>{this.props.cards.included[0].attributes.title} Quiz</h1>
+        <h1 className='is-size-2 has-text-link'>{this.props.cards.included[0].attributes.title} Quiz</h1>
         {this.state.submitted && <Score score={this.state.score} possible={this.props.cards.data.length} handleClick={this.handleClick} /> }
         <form onSubmit={this.handleSubmit}>
         {this.props.cards.data.map( card => {
