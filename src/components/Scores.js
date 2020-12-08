@@ -10,7 +10,7 @@ export default function Scores({ scores }) {
               })
               return (
                 <div key={score.id}>
-                  <p className='is-size-3'>{score.attributes.name} scored a {score.attributes.percentage} on {stack.attributes.title}</p>
+                  <p className='is-size-3'>{score.attributes.name} scored a {score.attributes.percentage}% on {stack.attributes.title}</p>
                 </div>
               )}
             )}
