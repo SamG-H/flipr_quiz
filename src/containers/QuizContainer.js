@@ -18,10 +18,10 @@ class QuizContainer extends Component {
   }
 }
 
-const mapPropsToState = state => {
+const mapStateToProps = state => {
   return {
     stacks: state.stacks
   }
 }
 
-export default connect(mapPropsToState) (QuizContainer)
+export default connect(mapStateToProps) (QuizContainer)
