@@ -19,19 +19,16 @@
   padding: 2px;
   display: grid;
   background-color: #eeeeee;
-  transition: transform 0.5s;
-  transform-style: preserve-3d;
+}
+
+.invisible {
+  display: none;
 }
 
 .clicked {
-  transform: rotateX(180deg);
-  background-color: #7fe0f8;
-}
-
-.back-card {
-  transform: rotateX(180deg);
+  background-color: #86BFE4;
 }
 
 .card:hover {
-  background-color: #7fe0f8;
+  background-color: #86BFE4;
 }
