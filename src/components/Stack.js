@@ -15,7 +15,7 @@ class Stack extends Component {
 
     return (
       <div className='has-text-centered'>
-        <h1 className='is-size-2 has-text-link'>{this.props.cards.included[0].attributes.title}</h1>
+        <h1 className='is-size-2'>{this.props.cards.included[0].attributes.title}</h1>
         <div className='cardsDiv'>
           {this.props.cards.data.map( card => {
               return (
