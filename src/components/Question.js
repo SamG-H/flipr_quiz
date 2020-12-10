@@ -9,7 +9,7 @@ export default function Question({front, back, id, handleChange, isCorrect, isSu
   }
     return (
       <div className='field'>
-        <label className='label is-size-5'>{front}</label>
+        <label className='label is-size-3'>{front}</label>
         <div className="control">
           <input type='text' value={value} onChange={handleChange} name={id} className={'input' + className}  style={{ width: '30%' }} required/>
         </div>
