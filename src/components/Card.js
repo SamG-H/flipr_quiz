@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import '../Card.css'
 
 export default class Card extends Component {
   render() {
     return (
       <div>
-        <p className='is-size-4'>{this.props.front} - {this.props.back}</p>
-
+        <div className='card'>{this.props.front}</div>
+        <div className='card' style={{display: 'none'}}>{this.props.back}</div>
       </div>
     )
   }
