@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCards } from '../actions/cardsActions'
 import Card from './Card'
+import CardForm from './CardForm'
 
 class Stack extends Component {
   componentDidMount() {
@@ -28,6 +29,7 @@ class Stack extends Component {
             )}
           )}
         </div>
+        <CardForm />
       </div>
     )
   }
