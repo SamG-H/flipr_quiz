@@ -17,6 +17,7 @@ class Stack extends Component {
       return (
       <div className='has-text-centered'>
         <h1 className='is-size-2 has-text-danger'>No cards in this stack yet!</h1>
+        <CardForm stackId={this.props.match.params.id} />
         <Link to='/stacks' exact className='is-size-2 is-link'>Go back to stacks</Link>
       </div> )
     }
