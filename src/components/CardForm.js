@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addCard } from '../actions/cardsActions'
 
-export default class CardForm extends Component {
+class CardForm extends Component {
   constructor() {
     super()
     this.state = {
@@ -15,40 +17,53 @@ export default class CardForm extends Component {
       [name]: value})
   }
 
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.addCard(this.props.stackId, this.state)
+    this.setState({
+      front: '',
+      back: ''
+    })
+  }
 
   render() {
     return (
       <div>
-        <h2 className='is-size-2'>Add a card to this stack</h2>
+        <h2 className='is-size-2'>Add a New Card</h2>
         <form onSubmit={this.handleSubmit}>
-          <div className='field is-horizontal'>
-            <label className='field-label'>Front:</label>
+          <div className='field'>
+            <label className='field-label is-size-4'>Front:</label>
             <div className='control'>
               <input
-                placeholder='front'
+                placeholder='Front of Card'
                 type='text'
                 value={this.state.front}
                 onChange={this.handleChange}
                 name='front'
                 className='input'
+                style={{ width: '30%' }}
                 required />
             </div>
           </div>
-          <div className='field is-horizontal'>
-            <label className='field-label'>Back:</label>
+          <div className='field'>
+            <label className='field-label is-size-4'>Back:</label>
             <div className='control'>
               <input
                 placeholder='back'
                 type='text'
                 value={this.state.back}
                 onChange={this.handleChange}
-                name='back'
+                name='Back of Card'
                 className='input'
+                style={{ width: '30%' }}
                 required />
             </div>
           </div>
+            <input type='submit' value='Add Card' className='button is-link'/>
         </form>
       </div>
     )
   }
 }
+
+export default connect(null, { addCard }) (CardForm)

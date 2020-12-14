@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCards } from '../actions/cardsActions'
 import Card from './Card'
 import CardForm from './CardForm'
+import { Link } from 'react-router-dom'
 
 class Stack extends Component {
   componentDidMount() {
@@ -29,7 +30,7 @@ class Stack extends Component {
             )}
           )}
         </div>
-        <CardForm />
+        <CardForm stackId={this.props.match.params.id} />
       </div>
     )
   }
