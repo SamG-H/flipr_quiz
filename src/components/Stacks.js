@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
+import StackForm from './StackForm'
 
 class Stacks extends Component {
   render() {
@@ -17,6 +18,10 @@ class Stacks extends Component {
             </>
           )}
         )}
+        <br />
+        <br />
+        <br />
+        <StackForm />
       </div>
     )
   }
