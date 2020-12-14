@@ -49,11 +49,11 @@ class CardForm extends Component {
             <label className='field-label is-size-4'>Back:</label>
             <div className='control'>
               <input
-                placeholder='back'
+                placeholder='Back of Card'
                 type='text'
                 value={this.state.back}
                 onChange={this.handleChange}
-                name='Back of Card'
+                name='back'
                 className='input'
                 style={{ width: '30%' }}
                 required />
