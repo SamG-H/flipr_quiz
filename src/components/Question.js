@@ -14,7 +14,7 @@ export default function Question({front, back, id, handleChange, isCorrect, isSu
           <input type='text' value={value} onChange={handleChange} name={id} className={'input' + className}  style={{ width: '30%' }} required/>
         </div>
         
-        {isSubmitted && !isCorrect ? <p className="help is-danger">{back}</p> : null}
+        {isSubmitted && !isCorrect ? <p className="is-size-3 help is-danger">{back}</p> : null}
       </div>
     )
 }
