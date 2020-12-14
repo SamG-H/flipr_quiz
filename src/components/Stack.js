@@ -13,6 +13,12 @@ class Stack extends Component {
   render() {
     if(this.props.cards.length === 0) {
       return null
+    } else if (!this.props.cards.included[0]){
+      return (
+      <div className='has-text-centered'>
+        <h1 className='is-size-2 has-text-danger'>No cards in this stack yet!</h1>
+        <Link to='/stacks' exact className='is-size-2 is-link'>Go back to stacks</Link>
+      </div> )
     }
 
     return (

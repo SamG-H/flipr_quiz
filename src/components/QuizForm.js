@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCards } from '../actions/cardsActions'
 import Question from './Question'
 import Score from './Score'
+import { Link } from 'react-router-dom'
 
 class QuizForm extends Component {
   
@@ -70,10 +71,16 @@ class QuizForm extends Component {
   }
 
   render() {
-    console.log('cards: ', this.props.card)
      if(this.props.cards.length === 0) {
       return null
+    } else if (!this.props.cards.included[0]){
+      return (
+      <div className='has-text-centered'>
+        <h1 className='is-size-2 has-text-danger'>No cards in this stack yet!</h1>
+        <Link to='/quizzes' exact className='is-size-2 is-link'>Go back to quizzes</Link>
+      </div> )
     }
+    
       return (
       <div className='has-text-centered'>
         <h1 className='is-size-2 has-text-link'>{this.props.cards.included[0].attributes.title} Quiz</h1>
