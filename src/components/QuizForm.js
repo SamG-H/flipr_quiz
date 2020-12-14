@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCards } from '../actions/cardsActions'
 import Question from './Question'
 import Score from './Score'
-import { Link } from 'react-router-dom'
+import CardForm from './CardForm'
 
 class QuizForm extends Component {
   
@@ -74,16 +74,19 @@ class QuizForm extends Component {
      if(this.props.cards.length === 0) {
       return null
     } else if (!this.props.cards.included[0]){
+      //find our current stack based on our route params
+      const stack = this.props.stacks.data.filter(element => element.id === this.props.match.params.id)
       return (
       <div className='has-text-centered'>
-        <h1 className='is-size-2 has-text-danger'>No cards in this stack yet!</h1>
-        <Link to='/quizzes' exact className='is-size-2 is-link'>Go back to quizzes</Link>
+        <h1 className='is-size-1 has-text-link'>{stack[0].attributes.title} Quiz</h1>
+        <p className='is-size-4 has-text-danger'>No cards in this stack yet!</p>
+        <CardForm stackId={this.props.match.params.id} />
       </div> )
     }
-    
+
       return (
       <div className='has-text-centered'>
-        <h1 className='is-size-2 has-text-link'>{this.props.cards.included[0].attributes.title} Quiz</h1>
+        <h1 className='is-size-1 has-text-link'>{this.props.cards.included[0].attributes.title} Quiz</h1>
         {this.state.submitted && <Score score={this.state.score} possible={this.props.cards.data.length} handleClick={this.handleClick} /> }
 
         <form onSubmit={this.handleSubmit}>
