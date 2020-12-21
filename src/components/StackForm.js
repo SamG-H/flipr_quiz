@@ -43,7 +43,7 @@ class StackForm extends Component {
                   required />
               </div>
             </div>
-              <input type='submit' value='Add Card' className='button is-link'/>
+              <input type='submit' value='Add Stack' className='button is-link'/>
           </form>
         </div>
     );
