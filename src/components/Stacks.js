@@ -13,17 +13,16 @@ class Stacks extends Component {
       <div>
         {this.props.stacks.data.map((stack) => {
           return (
-            <>
+            <div key={stack.id}>
               <Link
                 to={"/stacks/" + stack.id}
                 exact="true"
                 className="is-size-2 is-link"
-                key={stack.id}
               >
                 {stack.attributes.title}
               </Link>
               <br />
-            </>
+            </div>
           );
         })}
         <br />
