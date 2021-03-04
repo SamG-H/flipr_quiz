@@ -14,10 +14,14 @@ class Stack extends Component {
     if (this.props.cards.length === 0) {
       return null;
     } else if (!this.props.cards.included[0]) {
+      // find stack
+      const stack = this.props.stacks.data.filter(
+        (element) => element.id === this.props.match.params.id
+      );
       return (
         <div className="has-text-centered">
           <h1 className="is-size-2 has-text-danger">
-            No cards in this stack yet!
+            No cards in {stack[0].attributes.title} yet!
           </h1>
           <CardForm stackId={this.props.match.params.id} />
           <Link to="/stacks" exact className="is-size-2 is-link">
@@ -53,6 +57,7 @@ class Stack extends Component {
 const mapStateToProps = (state) => {
   return {
     cards: state.cards,
+    stacks: state.stacks,
   };
 };
 
