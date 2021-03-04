@@ -1,128 +1,159 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchCards } from '../actions/cardsActions'
-import Question from './Question'
-import Score from './Score'
-import CardForm from './CardForm'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchCards } from "../actions/cardsActions";
+import Question from "./Question";
+import Score from "./Score";
+import CardForm from "./CardForm";
 
 class QuizForm extends Component {
-  
   constructor() {
-    super()
+    super();
     this.state = {
       submitted: false,
       score: 0,
-      answers: {}
-    }
+      answers: {},
+    };
   }
 
   componentDidMount() {
-    this.props.fetchCards(this.props.match.params.id)
+    this.props.fetchCards(this.props.match.params.id);
   }
 
-  handleChange = e => {
-    const {name, value} = e.target
-    let answers = {...this.state.answers}
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    let answers = { ...this.state.answers };
     answers[name] = {
       content: value,
-      isCorrect: false
-    }
+      isCorrect: false,
+    };
     this.setState({
-      answers})
-  }
+      answers,
+    });
+  };
 
-  handleSubmit = e => {
-    e.preventDefault()
-    const score = this.correctQuiz()
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const score = this.correctQuiz();
     this.setState({
       score: score,
-      submitted: true
-    })
-  }
+      submitted: true,
+    });
+  };
 
   correctQuiz = () => {
-    let score = 0
-    let answers = {...this.state.answers}
-    this.props.cards.data.forEach( card => {
+    let score = 0;
+    let answers = { ...this.state.answers };
+    this.props.cards.data.forEach((card) => {
       for (const id in this.state.answers) {
-        if(this.state.answers[id].content.toLowerCase() === card.attributes.back.toLowerCase()
-           && id === card.id){ 
-          score += 1
+        if (
+          this.state.answers[id].content.toLowerCase() ===
+            card.attributes.back.toLowerCase() &&
+          id === card.id
+        ) {
+          score += 1;
           answers[id] = {
             ...this.state.answers[id],
-            isCorrect: true
-          }
+            isCorrect: true,
+          };
         }
       }
-    })
+    });
 
     this.setState({
-      answers
-    })
+      answers,
+    });
     return score;
-  }
+  };
 
   handleClick = () => {
     this.setState({
       score: 0,
       submitted: false,
-      answers: []
-    })
-  }
+      answers: [],
+    });
+  };
 
   render() {
-     if(this.props.cards.length === 0) {
-      return null
-    } else if (!this.props.cards.included[0]){
+    if (this.props.cards.length === 0) {
+      return null;
+    } else if (!this.props.cards.included[0]) {
       //find our current stack based on our route params
-      const stack = this.props.stacks.data.filter(element => element.id === this.props.match.params.id)
+      const stack = this.props.stacks.data.filter(
+        (element) => element.id === this.props.match.params.id
+      );
       return (
-      <div className='has-text-centered'>
-        <h1 className='is-size-1 has-text-link'>{stack[0].attributes.title} Quiz</h1>
-        <p className='is-size-4 has-text-danger'>No cards in this stack yet!</p>
-        <CardForm stackId={this.props.match.params.id} />
-      </div> )
+        <div className="has-text-centered">
+          <h1 className="is-size-1 has-text-link">
+            {stack[0].attributes.title} Quiz
+          </h1>
+          <p className="is-size-4 has-text-danger">
+            No cards in this stack yet!
+          </p>
+          <CardForm stackId={this.props.match.params.id} />
+        </div>
+      );
     }
 
-      return (
-      <div className='has-text-centered'>
-        <h1 className='is-size-1 has-text-link'>{this.props.cards.included[0].attributes.title} Quiz</h1>
-        {this.state.submitted && <Score score={this.state.score} possible={this.props.cards.data.length} handleClick={this.handleClick} /> }
+    return (
+      <div className="has-text-centered">
+        <h1 className="is-size-1 has-text-link">
+          {this.props.cards.included[0].attributes.title} Quiz
+        </h1>
+        {this.state.submitted && (
+          <Score
+            score={this.state.score}
+            possible={this.props.cards.data.length}
+            handleClick={this.handleClick}
+          />
+        )}
 
         <form onSubmit={this.handleSubmit}>
-        {this.props.cards.data.map( card => {
+          {this.props.cards.data.map((card) => {
             return (
-            <div key={card.id}>
-              <Question
-              front={card.attributes.front} 
-              back={card.attributes.back} 
-              id={card.id} 
-              isSubmitted={this.state.submitted} 
-              isCorrect={this.state.submitted && this.state.answers[card.id].isCorrect}
-              value={(Object.keys(this.state.answers).length === 0) || !(card.id in this.state.answers) ?  '' : this.state.answers[card.id].content }
-              handleChange={this.handleChange}/>
-            </div>
-          )
-        })}
-        <br />
-        <input type='submit' value='Submit Quiz' className='button is-primary' />
+              <div key={card.id}>
+                <Question
+                  front={card.attributes.front}
+                  back={card.attributes.back}
+                  id={card.id}
+                  isSubmitted={this.state.submitted}
+                  isCorrect={
+                    this.state.submitted &&
+                    this.state.answers[card.id].isCorrect
+                  }
+                  value={
+                    Object.keys(this.state.answers).length === 0 ||
+                    !(card.id in this.state.answers)
+                      ? ""
+                      : this.state.answers[card.id].content
+                  }
+                  handleChange={this.handleChange}
+                />
+              </div>
+            );
+          })}
+          <br />
+          <input
+            type="submit"
+            value="Submit Quiz"
+            className="button is-primary"
+          />
         </form>
       </div>
-      )
+    );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     cards: state.cards,
-    stacks: state.stacks
-  }
-}
+    stacks: state.stacks,
+  };
+};
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCards: (id) => dispatch(fetchCards(id))
-  }
-}
+    fetchCards: (id) => dispatch(fetchCards(id)),
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps) (QuizForm)
+export default connect(mapStateToProps, mapDispatchToProps)(QuizForm);

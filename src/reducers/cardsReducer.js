@@ -6,6 +6,7 @@ export const cardsReducer = (state = [], action) => {
       return {
         ...state,
         data: [...state.data, action.payload.data],
+        included: action.payload.included,
       };
     default:
       return state;
