@@ -26,7 +26,6 @@ export default function Question({
           name={id}
           className={"input" + className}
           style={{ width: "30%" }}
-          required
         />
       </div>
 
