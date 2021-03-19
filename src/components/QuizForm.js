@@ -58,24 +58,22 @@ class QuizForm extends Component {
     let score = 0;
     let answers = { ...this.state.answers };
     this.props.cards.data.forEach((card) => {
-      for (const id in this.state.answers) {
-        if (
-          this.state.answers[id].content.toLowerCase() ===
-            card.attributes.back.toLowerCase() &&
-          id === card.id
-        ) {
-          score += 1;
-          answers[id] = {
-            ...this.state.answers[id],
-            isCorrect: true,
-          };
-        }
+      if (
+        answers[card.id].content.toLowerCase() ===
+        card.attributes.back.toLowerCase()
+      ) {
+        score += 1;
+        answers[card.id] = {
+          ...answers[card.id],
+          isCorrect: true,
+        };
       }
     });
 
     this.setState({
       answers,
     });
+
     return score;
   };
 
