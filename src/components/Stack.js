@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchCards } from "../actions/cardsActions";
+import { deleteStack } from "../actions/stacksActions";
 import Card from "./Card";
 import CardForm from "./CardForm";
 import { Link } from "react-router-dom";
@@ -9,6 +10,11 @@ class Stack extends Component {
   componentDidMount() {
     this.props.fetchCards(this.props.match.params.id);
   }
+
+  handleClick = () => {
+    const { history } = this.props;
+    this.props.deleteStack(this.props.match.params.id, history);
+  };
 
   render() {
     if (this.props.cards.length === 0) {
@@ -23,6 +29,9 @@ class Stack extends Component {
           <h1 className="is-size-2 has-text-danger">
             No cards in {stack[0].attributes.title} yet!
           </h1>
+          <button className="button is-danger m-6" onClick={this.handleClick}>
+            Delete this stack
+          </button>
           <CardForm stackId={this.props.match.params.id} />
           <Link to="/stacks" exact className="is-size-2 is-link">
             Go back to stacks
@@ -48,6 +57,9 @@ class Stack extends Component {
             );
           })}
         </div>
+        <button className="button is-danger m-6" onClick={this.handleClick}>
+          Delete this stack
+        </button>
         <CardForm stackId={this.props.match.params.id} />
       </div>
     );
@@ -64,6 +76,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchCards: (id) => dispatch(fetchCards(id)),
+    deleteStack: (id, history) => dispatch(deleteStack(id, history)),
   };
 };
 

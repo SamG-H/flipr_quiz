@@ -17,3 +17,14 @@ export const addStack = (stack) => {
       .then((stacks) => dispatch({ type: "ADD_STACK", payload: stacks }));
   };
 };
+
+export const deleteStack = (id, history) => {
+  return (dispatch) => {
+    fetch(`http://localhost:3000/stacks/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(() => history.push("/stacks"))
+      .then(() => dispatch({ type: "DELETE_STACK", payload: id }));
+  };
+};
