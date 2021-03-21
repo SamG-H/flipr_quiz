@@ -16,7 +16,7 @@ export default function Question({
     className = " is-danger";
   }
   return (
-    <div className="field">
+    <div className="field mb-6">
       <label className="label is-size-3">{front}</label>
       <div className="control">
         <input
