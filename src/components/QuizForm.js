@@ -77,11 +77,18 @@ class QuizForm extends Component {
     return score;
   };
 
-  handleClick = () => {
+  resetForm = () => {
+    let answers = { ...this.state.answers };
+    for (let id in answers) {
+      answers[id] = {
+        content: "",
+        isCorrect: false,
+      };
+    }
     this.setState({
       score: 0,
       submitted: false,
-      answers: [],
+      answers,
     });
   };
 
@@ -114,7 +121,7 @@ class QuizForm extends Component {
             <Score
               score={this.state.score}
               possible={this.props.cards.data.length}
-              handleClick={this.handleClick}
+              resetForm={this.resetForm}
             />
           )}
 
