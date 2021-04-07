@@ -10,6 +10,7 @@ export const stacksReducer = (state = [], action) => {
     case "DELETE_STACK":
       return {
         data: state.data.filter((stack) => stack.id !== action.payload),
+        included: state.included,
       };
     default:
       return state;
