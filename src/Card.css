@@ -5,6 +5,7 @@
   grid-template-rows: auto;
   grid-gap: 10px;
   perspective: 2000px;
+  margin: 0 100px;
 }
 
 .card {
