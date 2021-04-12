@@ -1,29 +1,20 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "../Card.css";
 
-export default class Card extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isToggleOn: true,
-    };
-  }
+export default function Card({ front, back }) {
+  const [isToggleOn, setToggle] = useState(true);
 
-  handleClick = () => {
-    this.setState((state) => ({
-      isToggleOn: !state.isToggleOn,
-    }));
+  const handleClick = () => {
+    setToggle(!isToggleOn);
   };
 
-  render() {
-    return (
-      <div onClick={this.handleClick}>
-        {this.state.isToggleOn ? (
-          <div className="card">{this.props.front}</div>
-        ) : (
-          <div className="card clicked">{this.props.back}</div>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div onClick={() => handleClick()}>
+      {isToggleOn ? (
+        <div className="card">{front}</div>
+      ) : (
+        <div className="card clicked">{back}</div>
+      )}
+    </div>
+  );
 }
