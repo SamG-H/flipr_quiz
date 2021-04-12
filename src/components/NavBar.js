@@ -16,6 +16,9 @@ export default function NavBar() {
       <NavLink to="/stacks" exact className="navbar-item">
         Stacks
       </NavLink>
+      <NavLink to="/signin" exact className="navbar-item">
+        Sign In
+      </NavLink>
     </nav>
   );
 }

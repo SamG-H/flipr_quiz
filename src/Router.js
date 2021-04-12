@@ -1,6 +1,8 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
+import Signin from "./components/Signin";
+import Signup from "./components/Signup";
 import QuizContainer from "./containers/QuizContainer";
 import About from "./components/About";
 import QuizForm from "./components/QuizForm";
@@ -11,6 +13,8 @@ export default function Router() {
   return (
     <Switch>
       <Route exact={true} path="/" component={Home} />
+      <Route exact={true} path="/signin" component={Signin} />
+      <Route exact={true} path="/signup" component={Signup} />
       <Route exact={true} path="/about" component={About} />
       <Route exact={true} path="/quizzes" component={QuizContainer} />
       <Route
