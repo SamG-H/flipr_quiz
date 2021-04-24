@@ -1,5 +1,6 @@
 import React from "react";
 import "../Card.css";
+import indexCard from "../images/index_card.png";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <p className="is-size-4">
         Create stacks of flashcards, review them, and quiz your knowledge!
       </p>
+      <img src={indexCard} alt="index card" />
     </div>
   );
 }

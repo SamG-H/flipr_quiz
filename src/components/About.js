@@ -6,7 +6,8 @@ export default function About() {
       <h1 className="is-size-1">Why I Made Flipr Quiz</h1>
       <p className="is-size-4">
         I wanted to create a flashcard app that was clean, easy-to-use, and
-        allowed me to quiz myself.
+        allowed me to quiz myself. All of the other flashcard apps I have used
+        are bloated with unnecessary features.
       </p>
     </div>
   );
