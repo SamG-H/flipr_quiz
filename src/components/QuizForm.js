@@ -1,164 +1,139 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchCards } from "../actions/cardsActions";
 import Question from "./Question";
 import Score from "./Score";
 import CardForm from "./CardForm";
 
-class QuizForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      submitted: false,
-      score: 0,
-      answers: {},
-    };
-  }
+function QuizForm({ cards, stacks, fetchCards, match: { params } }) {
+  const [submitted, setSubmitted] = useState(false);
+  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState({});
 
-  componentDidMount() {
-    this.props.fetchCards(this.props.match.params.id);
-    fetch(`http://localhost:3000/stacks/${this.props.match.params.id}/cards`)
+  useEffect(() => {
+    fetchCards(params.id);
+    fetch(`http://localhost:3000/stacks/${params.id}/cards`)
       .then((resp) => resp.json())
       .then((cards) => {
-        let answers = {};
+        let tempAnswers = {};
         cards.data.forEach((card) => {
-          answers[card.id] = {
+          tempAnswers[card.id] = {
             content: "",
             isCorrect: false,
           };
         });
-        this.setState({
-          answers,
-        });
+        setAnswers(tempAnswers);
       });
-  }
+  }, [fetchCards, params.id]);
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    let answers = { ...this.state.answers };
-    answers[name] = {
+    let tempAnswers = { ...answers };
+    tempAnswers[name] = {
       content: value,
       isCorrect: false,
     };
-    this.setState({
-      answers,
-    });
+    setAnswers(tempAnswers);
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const score = this.correctQuiz();
-    this.setState({
-      score: score,
-      submitted: true,
-    });
+    const score = correctQuiz();
+    setScore(score);
+    setSubmitted(true);
   };
 
-  correctQuiz = () => {
+  const correctQuiz = () => {
     let score = 0;
-    let answers = { ...this.state.answers };
-    this.props.cards.data.forEach((card) => {
+    let tempAnswers = answers;
+    cards.data.forEach((card) => {
       if (
-        answers[card.id].content.toLowerCase() ===
+        tempAnswers[card.id].content.toLowerCase() ===
         card.attributes.back.toLowerCase()
       ) {
         score += 1;
-        answers[card.id] = {
+        tempAnswers[card.id] = {
           ...answers[card.id],
           isCorrect: true,
         };
       }
     });
 
-    this.setState({
-      answers,
-    });
+    setAnswers(tempAnswers);
 
     return score;
   };
 
-  resetForm = () => {
-    let answers = { ...this.state.answers };
+  const resetForm = () => {
+    let tempAnswers = answers;
     for (let id in answers) {
-      answers[id] = {
+      tempAnswers[id] = {
         content: "",
         isCorrect: false,
       };
     }
-    this.setState({
-      score: 0,
-      submitted: false,
-      answers,
-    });
+    setScore(0);
+    setSubmitted(false);
+    setAnswers(tempAnswers);
   };
 
-  render() {
-    if (this.props.cards.length === 0) {
-      return null;
-    } else if (!this.props.cards.included[0]) {
-      //find our current stack based on our route params
-      const stack = this.props.stacks.data.filter(
-        (element) => element.id === this.props.match.params.id
-      );
-      return (
-        <div className="has-text-centered">
-          <h1 className="is-size-1 has-text-link">
-            {stack[0].attributes.title} Quiz
-          </h1>
-          <p className="is-size-4 has-text-danger">
-            No cards in this stack yet!
-          </p>
-          <CardForm stackId={this.props.match.params.id} />
-        </div>
-      );
-    } else {
-      return (
-        <div className="has-text-centered">
-          <h1 className="is-size-1 has-text-link">
-            {this.props.cards.included[0].attributes.title} Quiz
-          </h1>
-          {this.state.submitted && (
-            <Score
-              score={this.state.score}
-              possible={this.props.cards.data.length}
-              resetForm={this.resetForm}
-            />
-          )}
+  if (cards.length === 0) {
+    return null;
+  } else if (!cards.included[0]) {
+    //find our current stack based on our route params
+    const stack = stacks.data.filter((element) => element.id === params.id);
+    return (
+      <div className="has-text-centered">
+        <h1 className="is-size-1 has-text-link">
+          {stack[0].attributes.title} Quiz
+        </h1>
+        <p className="is-size-4 has-text-danger">No cards in this stack yet!</p>
+        <CardForm stackId={params.id} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="has-text-centered">
+        <h1 className="is-size-1 has-text-link">
+          {cards.included[0].attributes.title} Quiz
+        </h1>
+        {submitted && (
+          <Score
+            score={score}
+            possible={cards.data.length}
+            resetForm={resetForm}
+          />
+        )}
 
-          <form onSubmit={this.handleSubmit}>
-            {this.props.cards.data.map((card) => {
-              return (
-                <div key={card.id}>
-                  <Question
-                    front={card.attributes.front}
-                    back={card.attributes.back}
-                    id={card.id}
-                    isSubmitted={this.state.submitted}
-                    isCorrect={
-                      this.state.submitted &&
-                      this.state.answers[card.id].isCorrect
-                    }
-                    value={
-                      Object.keys(this.state.answers).length === 0 ||
-                      !(card.id in this.state.answers)
-                        ? ""
-                        : this.state.answers[card.id].content
-                    }
-                    handleChange={this.handleChange}
-                  />
-                </div>
-              );
-            })}
-            <br />
-            <input
-              type="submit"
-              value="Submit Quiz"
-              className="button is-primary"
-            />
-          </form>
-        </div>
-      );
-    }
+        <form onSubmit={handleSubmit}>
+          {cards.data.map((card) => {
+            return (
+              <div key={card.id}>
+                <Question
+                  front={card.attributes.front}
+                  back={card.attributes.back}
+                  id={card.id}
+                  isSubmitted={submitted}
+                  isCorrect={submitted && answers[card.id].isCorrect}
+                  value={
+                    Object.keys(answers).length === 0 || !(card.id in answers)
+                      ? ""
+                      : answers[card.id].content
+                  }
+                  handleChange={handleChange}
+                />
+              </div>
+            );
+          })}
+          <br />
+          <input
+            type="submit"
+            value="Submit Quiz"
+            className="button is-primary"
+          />
+        </form>
+      </div>
+    );
   }
 }
 

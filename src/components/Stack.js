@@ -16,7 +16,7 @@ function Stack({
 }) {
   useEffect(() => {
     fetchCards(params.id);
-  }, []);
+  }, [fetchCards, params.id]);
 
   const handleClick = () => {
     deleteStack(params.id, history);
