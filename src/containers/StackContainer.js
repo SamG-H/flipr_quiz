@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import Stacks from "../components/Stacks";
 
-export default function StackContainer({ stacks }) {
+function StackContainer({ stacks }) {
   if (!stacks) {
     return (
       <div className="has-text-centered">
@@ -19,3 +20,11 @@ export default function StackContainer({ stacks }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    stacks: state.stacks,
+  };
+};
+
+export default connect(mapStateToProps)(StackContainer);
