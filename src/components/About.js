@@ -1,4 +1,5 @@
 import React from "react";
+import indexCard from "../images/index_card.png";
 
 export default function About() {
   return (
@@ -9,6 +10,7 @@ export default function About() {
         allowed me to quiz myself. All of the other flashcard apps I have used
         are bloated with unnecessary features.
       </p>
+      <img src={indexCard} alt="index card" />
     </div>
   );
 }
