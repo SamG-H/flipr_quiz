@@ -13,9 +13,6 @@ function Stacks({ stacks }) {
     });
     return author;
   };
-  if (stacks.length === 0) {
-    return null;
-  }
 
   return (
     <div>
