@@ -3,7 +3,11 @@ export const fetchCards = (id) => {
     fetch(`http://localhost:3000/stacks/${id}/cards`)
       .then((resp) => resp.json())
       .then((cards) => {
+        console.log(cards);
         dispatch({ type: "FETCH_CARDS", payload: cards });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 };
@@ -16,6 +20,9 @@ export const addCard = (id, card) => {
       headers: { "Content-Type": "application/json" },
     })
       .then((resp) => resp.json())
-      .then((cards) => dispatch({ type: "ADD_CARD", payload: cards }));
+      .then((cards) => dispatch({ type: "ADD_CARD", payload: cards }))
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
